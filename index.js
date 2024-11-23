@@ -183,6 +183,35 @@ class Tree {
         throw new Error("Node is not in the tree.");
       }
       
+      isBalanced(node = this.root) {
+        if (!node) {
+          return true; 
+        }
+      
+        const leftHeight = this.height(node.left);
+        const rightHeight = this.height(node.right);
+      
+        const heightDifference = Math.abs(leftHeight - rightHeight);
+        const leftBalanced = this.isBalanced(node.left);
+        const rightBalanced = this.isBalanced(node.right);
+      
+        return heightDifference <= 1 && leftBalanced && rightBalanced;
+      }
+      
+      reBalance() {
+        const inOrderTraversal = (node, result = []) => {
+          if (!node) return result;
+      
+          inOrderTraversal(node.left, result);
+          result.push(node.data);
+          inOrderTraversal(node.right, result);
+      
+          return result;
+        };
+      
+        const sortedValues = inOrderTraversal(this.root);
+        this.root = this.buildTree([...new Set(sortedValues)]); // Remove duplicates
+      }
       
       
 
@@ -201,15 +230,33 @@ class Tree {
 
 
 
-const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 56, 44, 66, 89];
+const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 const tree = new Tree(array);
 
-const printNode = (node) => console.log(node.data);
+// Check if the tree is balanced
+tree.prettyPrint()
+console.log(`Is the tree balanced? ${tree.isBalanced()}`);
+
+if (!tree.isBalanced()) {
+  tree.reBalance();
+  console.log("Tree has been rebalanced.");
+}
+
+console.log(`Is the tree balanced? ${tree.isBalanced()}`);
+
 tree.prettyPrint();
 
-console.log(`height of node with value 9: ${tree.height(tree.find(9))}`);
-console.log(`height of node with value 23: ${tree.height(tree.find(23))}`);
-console.log(`height of node with value 5: ${tree.height(tree.find(5))}`);
+
+// const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 56, 44, 66, 89];
+// const tree = new Tree(array);
+
+// const printNode = (node) => console.log(node.data);
+// tree.prettyPrint();
+// console.log(`Is the tree balanced? ${tree.isBalanced()}`);
+
+// console.log(`height of node with value 9: ${tree.height(tree.find(9))}`);
+// console.log(`height of node with value 23: ${tree.height(tree.find(23))}`);
+// console.log(`height of node with value 5: ${tree.height(tree.find(5))}`);
 
 
 
