@@ -229,58 +229,58 @@ class Tree {
 }
 
 
-
-const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-const tree = new Tree(array);
-
-// Check if the tree is balanced
-tree.prettyPrint()
-console.log(`Is the tree balanced? ${tree.isBalanced()}`);
-
-if (!tree.isBalanced()) {
-  tree.reBalance();
-  console.log("Tree has been rebalanced.");
+function getRandomArray(size, max) {
+  return Array.from({ length: size }, () => Math.floor(Math.random() * max));
 }
 
-console.log(`Is the tree balanced? ${tree.isBalanced()}`);
+function printNode(node) {
+  console.log(node.data);
+}
 
-tree.prettyPrint();
+function driverScript() {
+  console.log("=== Create a balanced binary search tree ===");
+  const randomArray = getRandomArray(10, 100); 
+  console.log("Initial Array:", randomArray);
 
+  const tree = new Tree(randomArray);
+  tree.prettyPrint();
 
-// const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 56, 44, 66, 89];
-// const tree = new Tree(array);
+  console.log("\n=== Confirm tree is balanced ===");
+  console.log("Is tree balanced?", tree.isBalanced());
 
-// const printNode = (node) => console.log(node.data);
-// tree.prettyPrint();
-// console.log(`Is the tree balanced? ${tree.isBalanced()}`);
+  console.log("\n=== Print tree elements in different orders ===");
+  console.log("Level Order:");
+  tree.levelOrder(printNode);
+  console.log("Preorder:");
+  tree.preOrder(printNode);
+  console.log("Postorder:");
+  tree.postOrder(printNode);
+  console.log("Inorder:");
+  tree.inOrder(printNode);
 
-// console.log(`height of node with value 9: ${tree.height(tree.find(9))}`);
-// console.log(`height of node with value 23: ${tree.height(tree.find(23))}`);
-// console.log(`height of node with value 5: ${tree.height(tree.find(5))}`);
+  console.log("\n=== Unbalance the tree by adding values > 100 ===");
+  [110, 120, 130, 140, 150].forEach(value => tree.insert(value));
+  tree.prettyPrint();
 
+  console.log("\n=== Confirm tree is unbalanced ===");
+  console.log("Is tree balanced?", tree.isBalanced());
 
+  console.log("\n=== Rebalance the tree ===");
+  tree.reBalance();
+  tree.prettyPrint();
 
+  console.log("\n=== Confirm tree is balanced ===");
+  console.log("Is tree balanced?", tree.isBalanced());
 
+  console.log("\n=== Print tree elements in different orders ===");
+  console.log("Level Order:");
+  tree.levelOrder(printNode);
+  console.log("Preorder:");
+  tree.preOrder(printNode);
+  console.log("Postorder:");
+  tree.postOrder(printNode);
+  console.log("Inorder:");
+  tree.inOrder(printNode);
+}
 
-// In-Order Traversal
-// tree.prettyPrint()
-// console.log("In-Order Traversal:");
-// tree.inOrder(printNode);
-
-// // Pre-Order Traversal
-// tree.prettyPrint()
-// console.log("\nPre-Order Traversal:");
-// tree.preOrder(printNode);
-
-// // Post-Order Traversal
-// tree.prettyPrint()
-// console.log("\nPost-Order Traversal:");
-// tree.postOrder(printNode);
-
-// console.log("Iterative Level Order Traversal:");
-// tree.levelOrder(printNode);
-
-// console.log("\nRecursive Level Order Traversal:");
-// tree.levelOrderRecursive(printNode);
-
-
+driverScript();
