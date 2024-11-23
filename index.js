@@ -114,6 +114,44 @@ class Tree {
       
         if (this.root) recursiveHelper([this.root]); 
       }
+
+      inOrder(callback, node = this.root) {
+        if (typeof callback !== "function") {
+          throw new Error("A callback function is required.");
+        }
+      
+        if (node !== null) {
+          this.inOrder(callback, node.left);
+          callback(node);
+          this.inOrder(callback, node.right);
+        }
+      }
+      
+
+      preOrder(callback, node = this.root) {
+        if (typeof callback !== "function") {
+          throw new Error("A callback function is required.");
+        }
+      
+        if (node !== null) {
+          callback(node);
+          this.preOrder(callback, node.left);
+          this.preOrder(callback, node.right);
+        }
+      }
+      
+
+      postOrder(callback, node = this.root) {
+        if (typeof callback !== "function") {
+          throw new Error("A callback function is required.");
+        }
+      
+        if (node !== null) {
+          this.postOrder(callback, node.left);
+          this.postOrder(callback, node.right);
+          callback(node);
+        }
+      }
       
 
 
@@ -137,10 +175,25 @@ const tree = new Tree(array);
 
 const printNode = (node) => console.log(node.data);
 
-console.log("Iterative Level Order Traversal:");
-tree.levelOrder(printNode);
+// In-Order Traversal
+tree.prettyPrint()
+console.log("In-Order Traversal:");
+tree.inOrder(printNode);
 
-console.log("\nRecursive Level Order Traversal:");
-tree.levelOrderRecursive(printNode);
+// Pre-Order Traversal
+tree.prettyPrint()
+console.log("\nPre-Order Traversal:");
+tree.preOrder(printNode);
+
+// Post-Order Traversal
+tree.prettyPrint()
+console.log("\nPost-Order Traversal:");
+tree.postOrder(printNode);
+
+// console.log("Iterative Level Order Traversal:");
+// tree.levelOrder(printNode);
+
+// console.log("\nRecursive Level Order Traversal:");
+// tree.levelOrderRecursive(printNode);
 
 
