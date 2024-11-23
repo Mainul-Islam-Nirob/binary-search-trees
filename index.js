@@ -174,6 +174,25 @@ class Tree {
       
         return computeHeight(node);
       }
+
+      depth(node, current = this.root, depthCount = 0) {
+        if (!node) {
+          throw new Error("Node must be provided.");
+        }
+      
+        if (current === node) {
+          return depthCount;
+        }
+      
+        if (node.data < current.data && current.left) {
+          return this.depth(node, current.left, depthCount + 1);
+        } else if (node.data > current.data && current.right) {
+          return this.depth(node, current.right, depthCount + 1);
+        }
+      
+        throw new Error("Node is not in the tree.");
+      }
+      
       
       
 
@@ -197,11 +216,17 @@ const tree = new Tree(array);
 
 const printNode = (node) => console.log(node.data);
 tree.prettyPrint();
-console.log(tree.height(23));
-console.log(tree.height(5));
-console.log(tree.height(3));
-console.log(tree.height(1));
-console.log(tree.height(69));
+
+console.log(`Depth of node with value 9: ${tree.depth(tree.find(9))}`);
+console.log(`Depth of node with value 23: ${tree.depth(tree.find(23))}`);
+console.log(`Depth of node with value 5: ${tree.depth(tree.find(5))}`);
+
+
+// console.log(tree.height(23));
+// console.log(tree.height(5));
+// console.log(tree.height(3));
+// console.log(tree.height(1));
+// console.log(tree.height(69));
 
 
 
