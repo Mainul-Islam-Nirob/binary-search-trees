@@ -153,27 +153,17 @@ class Tree {
         }
       }
       
-      height(value) {
-        const node = this.find(value);
-      
+      height(node) {
         if (!node) {
-          throw new Error(`Node with value ${value} not found in the tree.`);
+          return -1; 
         }
       
-        const computeHeight = (node) => {
-          if (!node) {
-            return -1; 
-          }
+        const leftHeight = this.height(node.left);
+        const rightHeight = this.height(node.right);
       
-          const leftHeight = computeHeight(node.left);
-          const rightHeight = computeHeight(node.right);
-      
-          // Return the maximum height of the two subtrees plus 1 for the current node
-          return Math.max(leftHeight, rightHeight) + 1;
-        };
-      
-        return computeHeight(node);
+        return Math.max(leftHeight, rightHeight) + 1;
       }
+      
 
       depth(node, current = this.root, depthCount = 0) {
         if (!node) {
@@ -217,16 +207,10 @@ const tree = new Tree(array);
 const printNode = (node) => console.log(node.data);
 tree.prettyPrint();
 
-console.log(`Depth of node with value 9: ${tree.depth(tree.find(9))}`);
-console.log(`Depth of node with value 23: ${tree.depth(tree.find(23))}`);
-console.log(`Depth of node with value 5: ${tree.depth(tree.find(5))}`);
+console.log(`height of node with value 9: ${tree.height(tree.find(9))}`);
+console.log(`height of node with value 23: ${tree.height(tree.find(23))}`);
+console.log(`height of node with value 5: ${tree.height(tree.find(5))}`);
 
-
-// console.log(tree.height(23));
-// console.log(tree.height(5));
-// console.log(tree.height(3));
-// console.log(tree.height(1));
-// console.log(tree.height(69));
 
 
 
