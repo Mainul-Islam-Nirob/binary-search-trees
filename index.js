@@ -153,7 +153,29 @@ class Tree {
         }
       }
       
-
+      height(value) {
+        const node = this.find(value);
+      
+        if (!node) {
+          throw new Error(`Node with value ${value} not found in the tree.`);
+        }
+      
+        const computeHeight = (node) => {
+          if (!node) {
+            return -1; 
+          }
+      
+          const leftHeight = computeHeight(node.left);
+          const rightHeight = computeHeight(node.right);
+      
+          // Return the maximum height of the two subtrees plus 1 for the current node
+          return Math.max(leftHeight, rightHeight) + 1;
+        };
+      
+        return computeHeight(node);
+      }
+      
+      
 
     prettyPrint(node = this.root, prefix = "", isLeft = true) {
         if (!node) return;
@@ -174,21 +196,30 @@ const array = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 56, 44, 66, 89];
 const tree = new Tree(array);
 
 const printNode = (node) => console.log(node.data);
+tree.prettyPrint();
+console.log(tree.height(23));
+console.log(tree.height(5));
+console.log(tree.height(3));
+console.log(tree.height(1));
+console.log(tree.height(69));
+
+
+
 
 // In-Order Traversal
-tree.prettyPrint()
-console.log("In-Order Traversal:");
-tree.inOrder(printNode);
+// tree.prettyPrint()
+// console.log("In-Order Traversal:");
+// tree.inOrder(printNode);
 
-// Pre-Order Traversal
-tree.prettyPrint()
-console.log("\nPre-Order Traversal:");
-tree.preOrder(printNode);
+// // Pre-Order Traversal
+// tree.prettyPrint()
+// console.log("\nPre-Order Traversal:");
+// tree.preOrder(printNode);
 
-// Post-Order Traversal
-tree.prettyPrint()
-console.log("\nPost-Order Traversal:");
-tree.postOrder(printNode);
+// // Post-Order Traversal
+// tree.prettyPrint()
+// console.log("\nPost-Order Traversal:");
+// tree.postOrder(printNode);
 
 // console.log("Iterative Level Order Traversal:");
 // tree.levelOrder(printNode);
